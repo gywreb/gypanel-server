@@ -121,6 +121,21 @@
           }
         }
       }
+    },
+    "/user/getCurrent": {
+      "get": {
+        "tags": ["User"],
+        "summary": "get current auth user",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
     }
   },
   "components": {

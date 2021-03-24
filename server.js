@@ -9,6 +9,7 @@ const cors = require("cors");
 const ConnectMongoDB = require("./database/dbConnect");
 const errorHandler = require("./middleware/errorHandler");
 const auth = require("./routes/auth");
+const user = require("./routes/user");
 
 ConnectMongoDB.getConnection();
 
@@ -16,9 +17,10 @@ app.use(express.json());
 app.use(cors());
 // app.use(helmet());
 
-app.use("/adminPanel/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 app.use("/adminPanel/api/auth", auth);
+app.use("/adminPanel/api/user", user);
 
 app.use(errorHandler);
 
