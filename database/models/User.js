@@ -9,6 +9,7 @@ const UserSchema = new Schema(
     fullname: {
       type: String,
       required: [true, "fullname is required"],
+      trim: true,
     },
     email: {
       type: String,
@@ -20,6 +21,7 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "password is required"],
       minlength: [8, "password must be at least 8 characters"],
+      trim: true,
     },
     phone: String,
     company: String,

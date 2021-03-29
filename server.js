@@ -10,6 +10,8 @@ const ConnectMongoDB = require("./database/dbConnect");
 const errorHandler = require("./middleware/errorHandler");
 const auth = require("./routes/auth");
 const user = require("./routes/user");
+const category = require("./routes/category");
+const product = require("./routes/product");
 
 ConnectMongoDB.getConnection();
 
@@ -21,6 +23,8 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 app.use("/adminPanel/api/auth", auth);
 app.use("/adminPanel/api/user", user);
+app.use("/adminPanel/api/category", category);
+app.use("/adminPanel/api/product", product);
 
 app.use(errorHandler);
 

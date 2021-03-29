@@ -6,10 +6,12 @@ const CustomerSchema = new Schema(
     firstname: {
       type: String,
       required: [true, "first name is required"],
+      trim: true,
     },
     lastname: {
       type: String,
       required: [true, "last name is required"],
+      trim: true,
     },
     gender: {
       type: String,
