@@ -10,7 +10,7 @@ exports.getProductList = asyncMiddleware(async (req, res, next) => {
 });
 
 exports.createProduct = asyncMiddleware(async (req, res, next) => {
-  const { name, categories, price, quantity } = req.body;
+  const { name, price, quantity } = req.body;
   const priceNumber = parseInt(price);
 
   const product = new Product({

@@ -19,6 +19,7 @@ const StaffSchema = new Schema(
       enum: ["male", "female"],
       required: [true, "gender is required"],
     },
+    avatar: String,
     address: String,
     birthday: String,
     company: String,
