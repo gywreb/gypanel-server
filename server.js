@@ -5,7 +5,6 @@ const app = express();
 require("colors");
 require("dotenv").config();
 const cors = require("cors");
-// const helmet = require("helmet");
 const ConnectMongoDB = require("./database/dbConnect");
 const errorHandler = require("./middleware/errorHandler");
 const auth = require("./routes/auth");
@@ -17,7 +16,6 @@ ConnectMongoDB.getConnection();
 
 app.use(express.json());
 app.use(cors());
-// app.use(helmet());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
