@@ -26,9 +26,9 @@ const UserSchema = new Schema(
     phone: String,
     company: String,
     role: {
-      type: String,
-      enum: ["devAdmin", "companyAdmin"],
-      default: "devAdmin",
+      type: Schema.Types.ObjectId,
+      ref: "Role",
+      required: [true, "role is required"],
     },
     isActive: {
       type: Boolean,

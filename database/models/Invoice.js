@@ -11,6 +11,18 @@ const InvoiceSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Customer",
     },
+    productList: [
+      {
+        id: {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+      },
+    ],
     paymentDate: {
       type: Date,
       default: null,
@@ -26,6 +38,14 @@ const InvoiceSchema = new Schema(
     shippingFee: {
       type: Number,
       default: 0,
+    },
+    isConfirmPending: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }

@@ -27,6 +27,9 @@ const errorHandler = (err, req, res, next) => {
   // resource not found error
   else if (err.name === "CastError")
     errors = new ErrorResponse(404, "resource not found!");
+  // token expired
+  else if (err.name === "TokenExpiredError")
+    errors = new ErrorResponse(401, err.message);
 
   // error debug
   console.log(err);

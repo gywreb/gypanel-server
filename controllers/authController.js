@@ -4,16 +4,23 @@ const { ErrorResponse } = require("../models/ErrorResponse");
 const { SuccessResponse } = require("../models/SuccessResponse");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
+const Role = require("../database/models/Role");
 
 exports.register = asyncMiddleware(async (req, res, next) => {
-  const { fullname, email, password } = req.body;
+  const { fullname, email, password, role } = req.body;
+
+  const existedRole = await Role.findById(role);
+  if (!existedRole) return next(new ErrorResponse(404, "role is not found"));
+
   const user = new User({
     fullname,
     email,
     password,
+    role: existedRole._id,
   });
-  const newUser = await user.save();
-  res.json(new SuccessResponse(201, { newUser }));
+
+  await user.save();
+  res.json(new SuccessResponse(201, "successfully create new user"));
 });
 
 exports.login = asyncMiddleware(async (req, res, next) => {

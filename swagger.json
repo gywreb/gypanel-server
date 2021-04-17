@@ -181,6 +181,38 @@
         }
       }
     },
+    "/product/{productId}": {
+      "patch": {
+        "tags": ["Product"],
+        "summary": "toggle active state of product",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "product ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
     "/category": {
       "get": {
         "tags": ["Category"],
@@ -221,6 +253,38 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/category/{categoryId}": {
+      "patch": {
+        "tags": ["Category"],
+        "summary": "toggle active state of category",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "category ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
           }
         }
       }
@@ -435,7 +499,7 @@
           "price": {
             "type": "number"
           },
-          "quantity": {
+          "instock": {
             "type": "number",
             "default": 1
           },
@@ -453,6 +517,10 @@
           "categories": {
             "type": "array",
             "items": { "type": "string" }
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
           }
         }
       },
@@ -504,6 +572,10 @@
             "items": {
               "$ref": "#/components/schemas/Invoice"
             }
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
           }
         }
       },
@@ -519,6 +591,16 @@
             "type": "string",
             "$ref": "#/components/schemas/Customer"
           },
+          "productList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "quantity": { "type": "number" }
+              }
+            }
+          },
           "paymentDate": {
             "type": "string",
             "format": "date"
@@ -533,6 +615,10 @@
           "shippingFee": {
             "type": "number",
             "default": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
           }
         }
       },
@@ -562,6 +648,10 @@
             "type": "string",
             "uniqueItems": true,
             "example": "someone@gmail.com"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
           }
         }
       }

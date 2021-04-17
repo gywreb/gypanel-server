@@ -23,9 +23,13 @@ const ProductSchema = new Schema(
       type: Number,
       required: [true, "price is required"],
     },
-    quantity: {
+    instock: {
       type: Number,
       default: 1,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }

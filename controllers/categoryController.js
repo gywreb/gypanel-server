@@ -19,12 +19,33 @@ exports.createCategory = asyncMiddleware(async (req, res, next) => {
   res.json(new SuccessResponse(200, { newCategory }));
 });
 
-exports.deleteCategoryById = asyncMiddleware(async (req, res, next) => {
-  const { id } = req.params;
-  const deletedCategory = await Category.findByIdAndDelete(id);
-  if (!deletedCategory)
-    return next(new ErrorResponse(404, "category is not found"));
-  res.json(new SuccessResponse(200, "category is deleted"));
+exports.deleteAll = asyncMiddleware(async (req, res, next) => {
+  await Category.deleteMany();
+  res.json(new SuccessResponse(200, "deleted all categories"));
+});
 
-  // Delete category from product
+// exports.deleteCategoryById = asyncMiddleware(async (req, res, next) => {
+//   const { id } = req.params;
+//   const deletedCategory = await Category.findByIdAndDelete(id);
+//   if (!deletedCategory)
+//     return next(new ErrorResponse(404, "category is not found"));
+
+//   // Delete categories from products
+//   await Product.updateMany(
+//     { _id: deletedCategory.categories },
+//     { $pull: { categories: deletedCategory.categories } }
+//   );
+
+//   res.json(new SuccessResponse(200, "category is deleted"));
+// });
+
+exports.toggleActiveCategory = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const category = await Category.findById(id);
+  if (!category) return next(new ErrorResponse(404, "no category found"));
+  await Category.updateOne(
+    { _id: category._id },
+    { isActive: !category.isActive }
+  );
+  res.json(new SuccessResponse(200, "successfully change active state"));
 });

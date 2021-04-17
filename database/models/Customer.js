@@ -26,6 +26,10 @@ const CustomerSchema = new Schema(
       unique: true,
     },
     phone: String,
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }
 );

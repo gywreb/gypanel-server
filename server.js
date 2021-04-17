@@ -11,6 +11,7 @@ const auth = require("./routes/auth");
 const user = require("./routes/user");
 const category = require("./routes/category");
 const product = require("./routes/product");
+const role = require("./routes/role");
 
 ConnectMongoDB.getConnection();
 
@@ -23,6 +24,7 @@ app.use("/adminPanel/api/auth", auth);
 app.use("/adminPanel/api/user", user);
 app.use("/adminPanel/api/category", category);
 app.use("/adminPanel/api/product", product);
+app.use("/adminPanel/api/role", role);
 
 app.use(errorHandler);
 

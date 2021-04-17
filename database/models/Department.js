@@ -1,19 +1,16 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const CategorySchema = new Schema({
+const DepartmentSchema = new Schema({
   name: {
     type: String,
     required: [true, "name is required"],
-    minlength: [3, "name must be at least 3 characters"],
-    trim: true,
     unique: true,
   },
-  description: String,
-  products: [
+  staffs: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "Staff",
     },
   ],
   isActive: {
@@ -21,5 +18,3 @@ const CategorySchema = new Schema({
     default: true,
   },
 });
-
-module.exports = mongoose.model("Category", CategorySchema, "categories");

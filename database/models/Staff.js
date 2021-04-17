@@ -36,6 +36,10 @@ const StaffSchema = new Schema(
         ref: "Invoice",
       },
     ],
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }
 );
