@@ -28,6 +28,10 @@
       "description": "Operations about user"
     },
     {
+      "name": "Role",
+      "description": "Operations about role"
+    },
+    {
       "name": "Product",
       "description": "Operations about product"
     },
@@ -130,6 +134,53 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/role": {
+      "get": {
+        "tags": ["Role"],
+        "summary": "get roles",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Role"],
+        "summary": "create new role",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
@@ -482,6 +533,36 @@
             "type": "string",
             "enum": ["devAdmin", "companyAdmin"],
             "example": "devAdmin"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "required": ["name", "permissions", "methods"],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "methods": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["GET", "POST", "PUT", "PATCH", "DELETE", "ALL"]
+            }
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/User"
+            }
           },
           "isActive": {
             "type": "boolean",
