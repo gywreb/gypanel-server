@@ -155,7 +155,7 @@
           {
             "name": "filename",
             "in": "path",
-            "description": "filename of model(user, product, ...)",
+            "description": "filename of model specific field(featureImg, avatar, ...)",
             "required": true,
             "schema": {
               "type": "string"
