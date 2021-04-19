@@ -7,6 +7,6 @@ const accessControl = require("../middleware/accessControl");
 router
   .route("/")
   .get(jwtAuth, accessControl, roleController.getRoles)
-  .post(jwtAuth, roleController.createRole);
+  .post(jwtAuth, accessControl, roleController.createRole);
 
 module.exports = router;
