@@ -28,6 +28,10 @@
       "description": "Operations about user"
     },
     {
+      "name": "File",
+      "description": "Operations about file"
+    },
+    {
       "name": "Role",
       "description": "Operations about role"
     },
@@ -135,6 +139,35 @@
         "responses": {
           "200": {
             "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/file/{filename}": {
+      "get": {
+        "tags": ["File"],
+        "summary": "get file (image, ...)",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "filename",
+            "in": "path",
+            "description": "filename of model(user, product, ...)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"

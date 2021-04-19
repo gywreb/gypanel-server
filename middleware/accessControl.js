@@ -10,6 +10,7 @@ const accessControl = asyncMiddleware(async (req, res, next) => {
   //   console.log(req.originalUrl.split("/")[3]);
   if (role.permissions.includes("all") && role.methods.includes("ALL"))
     return next();
+  if (req.originalUrl.split("/")[3] === "file") return next();
   if (
     !role.permissions.includes(req.originalUrl.split("/")[3]) ||
     !role.methods.includes(req.method)
