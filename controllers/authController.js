@@ -32,5 +32,16 @@ exports.login = asyncMiddleware(async (req, res, next) => {
   if (!isMatch) return next(new ErrorResponse(400, "password is incorrect"));
   const payload = _.omit(user._doc, "password", "_id", "__v");
   const token = User.generateJwt(payload);
-  res.json(new SuccessResponse(200, { token }));
+
+  const role = await Role.findById(user.role);
+  if (!role) return next(new ErrorResponse(404, "role not found"));
+
+  res.json(
+    new SuccessResponse(200, {
+      token,
+      role: role.name,
+      routes: role.permissions,
+      methods: role.methods,
+    })
+  );
 });
