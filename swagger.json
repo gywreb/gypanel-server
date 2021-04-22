@@ -632,7 +632,8 @@
           },
           "images": {
             "type": "array",
-            "items": { "type": "string", "format": "binary" }
+            "items": { "type": "string", "format": "binary" },
+            "default": []
           },
           "featuredImg": {
             "type": "string",
@@ -640,7 +641,8 @@
           },
           "categories": {
             "type": "array",
-            "items": { "type": "string" }
+            "items": { "type": "string" },
+            "default": []
           },
           "isActive": {
             "type": "boolean",
