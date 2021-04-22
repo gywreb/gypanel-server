@@ -11,13 +11,14 @@ exports.getProductList = asyncMiddleware(async (req, res, next) => {
 });
 
 exports.createProduct = asyncMiddleware(async (req, res, next) => {
-  const { name, price, categories, quantity } = req.body;
+  const { name, price, categories, quantity, images } = req.body;
   const priceNumber = parseInt(price);
 
   const product = new Product({
     name,
     categories: null,
     price: priceNumber,
+    images: images ? images : [],
     featuredImg: req.file ? req.file.filename : "",
     quantity,
   });

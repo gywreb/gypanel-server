@@ -36,6 +36,10 @@ const StaffSchema = new Schema(
         ref: "Invoice",
       },
     ],
+    department: {
+      type: Schema.Types.ObjectId,
+      ref: "Department",
+    },
     isActive: {
       type: Boolean,
       default: true,
