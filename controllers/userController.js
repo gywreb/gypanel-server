@@ -2,6 +2,7 @@ const asyncMiddleware = require("../middleware/asyncMiddleware");
 const { ErrorResponse } = require("../models/ErrorResponse");
 const _ = require("lodash");
 const { SuccessResponse } = require("../models/SuccessResponse");
+const Role = require("../database/models/Role");
 
 exports.getCurrentUser = asyncMiddleware(async (req, res, next) => {
   const { user } = req;
