@@ -39,6 +39,7 @@ exports.login = asyncMiddleware(async (req, res, next) => {
   res.json(
     new SuccessResponse(200, {
       token,
+      userInfo: payload,
       role: role.name,
       routes: role.permissions,
       methods: role.methods,
