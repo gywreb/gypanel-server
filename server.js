@@ -13,6 +13,7 @@ const category = require("./routes/category");
 const product = require("./routes/product");
 const role = require("./routes/role");
 const file = require("./routes/file");
+const analytic = require("./routes/analytic");
 
 ConnectMongoDB.getConnection();
 
@@ -28,6 +29,7 @@ app.use("/adminPanel/api/category", category);
 app.use("/adminPanel/api/product", product);
 app.use("/adminPanel/api/role", role);
 app.use("/adminPanel/api/file", file);
+app.use("/adminPanel/api/analytic", analytic);
 
 app.use(errorHandler);
 

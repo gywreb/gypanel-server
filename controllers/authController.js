@@ -19,7 +19,10 @@ exports.register = asyncMiddleware(async (req, res, next) => {
     role: existedRole._id,
   });
 
-  await user.save();
+  const newUser = await user.save();
+
+  await Role.updateOne({ _id: role }, { $push: { users: newUser._id } });
+
   res.json(new SuccessResponse(201, "successfully create new user"));
 });
 

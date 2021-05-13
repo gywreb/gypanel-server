@@ -25,6 +25,13 @@ const UserSchema = new Schema(
     },
     phone: String,
     company: String,
+    avatar: String,
+    address: String,
+    birthday: String,
+    gender: {
+      type: String,
+      enum: ["male", "female"],
+    },
     role: {
       type: Schema.Types.ObjectId,
       ref: "Role",
@@ -34,6 +41,12 @@ const UserSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    invoices: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Invoice",
+      },
+    ],
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }
 );

@@ -5,7 +5,7 @@ const InvoiceSchema = new Schema(
   {
     fromStaff: {
       type: Schema.Types.ObjectId,
-      ref: "Staff",
+      ref: "User",
     },
     clientInfo: {
       type: Schema.Types.ObjectId,
