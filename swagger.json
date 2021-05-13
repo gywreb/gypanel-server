@@ -599,6 +599,10 @@
             "type": "string",
             "enum": ["male", "female"]
           },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          },
           "address": {
             "type": "string"
           },
