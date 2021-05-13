@@ -9,4 +9,6 @@ router
   .get(jwtAuth, accessControl, roleController.getRoles)
   .post(jwtAuth, accessControl, roleController.createRole);
 
+router.patch("/:id", jwtAuth, accessControl, roleController.toggleActiveRole);
+
 module.exports = router;

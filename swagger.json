@@ -44,10 +44,6 @@
       "description": "Operations about category"
     },
     {
-      "name": "Staff",
-      "description": "Operations about staff"
-    },
-    {
       "name": "Customer",
       "description": "Operations about customer"
     },
@@ -146,6 +142,95 @@
         }
       }
     },
+    "/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "get all users",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "toggle active state of user",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/user/updateOne/{userId}": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "update properties of user",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
     "/file/{filename}": {
       "get": {
         "tags": ["File"],
@@ -227,6 +312,38 @@
           },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/role/{roleId}": {
+      "patch": {
+        "tags": ["Role"],
+        "summary": "toggle active state of role",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "role ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
           }
         }
       }
@@ -382,94 +499,6 @@
           }
         }
       }
-    },
-    "/staff": {
-      "get": {
-        "tags": ["Staff"],
-        "summary": "get staff list",
-        "security": [{ "bearerAuth": [] }],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/OK"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Staff"],
-        "summary": "create new staff",
-        "security": [{ "bearerAuth": [] }],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Staff"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/OK"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
-    "/invoice": {
-      "get": {
-        "tags": ["Invoice"],
-        "summary": "get invoice list",
-        "security": [{ "bearerAuth": [] }],
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/OK"
-          },
-          "404": {
-            "$ref": "#/components/responses/NotFound"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      },
-      "post": {
-        "tags": ["Invoice"],
-        "summary": "create new invoice",
-        "security": [{ "bearerAuth": [] }],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Invoice"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "$ref": "#/components/responses/OK"
-          },
-          "400": {
-            "$ref": "#/components/responses/BadRequest"
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
     }
   },
   "components": {
@@ -566,6 +595,16 @@
             "format": "password",
             "minLength": 6
           },
+          "gender": {
+            "type": "string",
+            "enum": ["male", "female"]
+          },
+          "address": {
+            "type": "string"
+          },
+          "birthday": {
+            "type": "string"
+          },
           "phone": {
             "type": "string"
           },
@@ -573,9 +612,13 @@
             "type": "string"
           },
           "role": {
-            "type": "string",
-            "enum": ["devAdmin", "companyAdmin"],
-            "example": "devAdmin"
+            "type": "string"
+          },
+          "invoices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Invoice"
+            }
           },
           "isActive": {
             "type": "boolean",
@@ -663,55 +706,13 @@
           }
         }
       },
-      "Staff": {
-        "type": "object",
-        "required": ["firstname", "lastname", "gender", "contactEmail"],
-        "properties": {
-          "firstname": {
-            "type": "string",
-            "example": "dragingod-sama"
-          },
-          "lastname": {
-            "type": "string",
-            "example": "dragingod-sama"
-          },
-          "gender": {
-            "type": "string",
-            "enum": ["male", "female"]
-          },
-          "phone": {
-            "type": "string"
-          },
-          "address": {
-            "type": "string"
-          },
-          "company": {
-            "type": "string"
-          },
-          "contactEmail": {
-            "type": "string",
-            "uniqueItems": true,
-            "example": "someone@gmail.com"
-          },
-          "invoices": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Invoice"
-            }
-          },
-          "isActive": {
-            "type": "boolean",
-            "default": true
-          }
-        }
-      },
       "Invoice": {
         "type": "object",
         "required": ["total"],
         "properties": {
           "fromStaff": {
             "type": "string",
-            "$ref": "#/components/schemas/Staff"
+            "$ref": "#/components/schemas/User"
           },
           "clientInfo": {
             "type": "string",

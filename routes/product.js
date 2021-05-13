@@ -22,4 +22,11 @@ router.delete(
   productController.deleteAll
 );
 
+router.patch(
+  "/:id",
+  jwtAuth,
+  accessControl,
+  productController.toggleActiveProduct
+);
+
 module.exports = router;
