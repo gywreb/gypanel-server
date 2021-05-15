@@ -7,7 +7,12 @@ const uploadImg = require("../middleware/uploadImg");
 
 router.get("/getCurrent", jwtAuth, userController.getCurrentUser);
 router.get("/", jwtAuth, accessControl, userController.getUserList);
-router.patch("/:id", jwtAuth, accessControl, userController.toggleActiveUser);
+
+router
+  .route("/:id")
+  .get(jwtAuth, accessControl, userController.getUserById)
+  .patch(jwtAuth, accessControl, userController.toggleActiveUser);
+
 router.patch(
   "/updateOne/:id",
   jwtAuth,

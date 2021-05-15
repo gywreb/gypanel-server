@@ -22,11 +22,17 @@ router.delete(
   productController.deleteAll
 );
 
+router
+  .route("/:id")
+  .get(jwtAuth, accessControl, productController.getProductById)
+  .patch(jwtAuth, accessControl, productController.toggleActiveProduct);
+
 router.patch(
-  "/:id",
+  "/updateOne/:id",
   jwtAuth,
   accessControl,
-  productController.toggleActiveProduct
+  uploadImg.single("featuredImg"),
+  productController.updateProductById
 );
 
 module.exports = router;

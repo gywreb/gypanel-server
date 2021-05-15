@@ -9,6 +9,9 @@ router
   .get(jwtAuth, accessControl, roleController.getRoles)
   .post(jwtAuth, accessControl, roleController.createRole);
 
-router.patch("/:id", jwtAuth, accessControl, roleController.toggleActiveRole);
+router
+  .route("/:id")
+  .get(jwtAuth, accessControl, roleController.getRoleById)
+  .patch(jwtAuth, accessControl, roleController.toggleActiveRole);
 
 module.exports = router;

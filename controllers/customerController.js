@@ -3,7 +3,7 @@ const Customer = require("../database/models/Customer");
 const { ErrorResponse } = require("../models/ErrorResponse");
 const { SuccessResponse } = require("../models/SuccessResponse");
 
-exports.getCustomer = asyncMiddleware(async (req, res, next) => {
+exports.getCustomerList = asyncMiddleware(async (req, res, next) => {
   const customers = await Customer.find();
   if (!customers) return next(new ErrorResponse(404, "no customer found"));
   res.json(new SuccessResponse(200, { customers }));
@@ -16,7 +16,8 @@ exports.createCustomer = asyncMiddleware(async (req, res, next) => {
     gender,
     email,
   });
-  const customer = await customer.save();
+  const newCustomer = await customer.save();
+  res.json(new SuccessResponse(200, { newCustomer }));
 });
 
 exports.getCustomerById = asyncMiddleware(async (req, res, next) => {

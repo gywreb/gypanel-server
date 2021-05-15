@@ -34,6 +34,13 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
   res.json(new SuccessResponse(201, { newInvoice }));
 });
 
+exports.getInvoiceById = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const invoice = await Invoice.findById(id);
+  if (!invoice) return next(new ErrorResponse(404, "no invoice found"));
+  res.json(new SuccessResponse(200, { invoice }));
+});
+
 exports.confirmInvoice = asyncMiddleware(async (req, res, next) => {
   const { id } = req.params;
   const invoice = await Invoice.findById(id);

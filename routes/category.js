@@ -18,6 +18,14 @@ router.delete(
 
 router
   .route("/:id")
+  .get(jwtAuth, accessControl, categoryController.getCategoryById)
   .patch(jwtAuth, accessControl, categoryController.toggleActiveCategory);
+
+router.patch(
+  "/updateOne/:id",
+  jwtAuth,
+  accessControl,
+  categoryController.updateCategoryById
+);
 
 module.exports = router;
