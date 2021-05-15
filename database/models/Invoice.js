@@ -39,13 +39,9 @@ const InvoiceSchema = new Schema(
       type: Number,
       default: 0,
     },
-    isConfirmPending: {
+    isConfirm: {
       type: Boolean,
       default: false,
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
     },
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }

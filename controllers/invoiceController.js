@@ -15,6 +15,7 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
   const {
     fromStaff,
     clientInfo,
+    productList,
     paymentDate,
     total,
     tax,
@@ -23,6 +24,7 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
   const invoice = new Invoice({
     fromStaff,
     clientInfo,
+    productList,
     paymentDate,
     total,
     tax,
@@ -30,4 +32,12 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
   });
   const newInvoice = await invoice.save();
   res.json(new SuccessResponse(201, { newInvoice }));
+});
+
+exports.confirmInvoice = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const invoice = await Invoice.findById(id);
+  if (!invoice) return next(new ErrorResponse(404, "no invoice found"));
+  await Invoice.updateOne({ _id: invoice.id }, { isConfirm: true });
+  res.json(new SuccessResponse(200, "successfully confirm invoice"));
 });

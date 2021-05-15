@@ -49,3 +49,22 @@ exports.toggleActiveCategory = asyncMiddleware(async (req, res, next) => {
   );
   res.json(new SuccessResponse(200, "successfully change active state"));
 });
+
+exports.getCategoryById = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const category = await Category.findById(id);
+  if (!category) return next(new ErrorResponse(404, "no category found"));
+  res.json(new SuccessResponse(200, { category }));
+});
+
+exports.updateCategoryById = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const updateParams = req.body;
+  const category = await Category.findOne({ _id: id });
+
+  for (let property in updateParams) {
+    category[property] = updateParams[property];
+  }
+  const updatedCategory = await category.save();
+  res.json(new SuccessResponse(200, { updatedCategory }));
+});

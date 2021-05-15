@@ -34,3 +34,33 @@ exports.createStaff = asyncMiddleware(async (req, res, next) => {
   const newStaff = await staff.save();
   res.json(new SuccessResponse(201, { newStaff }));
 });
+
+exports.getStaffById = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const staff = await Staff.findById(id);
+  if (!staff) return next(new ErrorResponse(404, "no staff found"));
+  res.json(new SuccessResponse(200, { staff }));
+});
+
+exports.toggleAciveStaff = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const staff = await Staff.findById(id);
+  if (!staff) return next(new ErrorResponse(404, "no staff found"));
+  await Staff.updateOne({ _id: id }, { isActive: !staff.isActive });
+  res.json(new SuccessResponse(200, "successfully changed active state"));
+});
+
+exports.updateStaffById = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  let updateParams = req.body;
+  const staff = await Staff.findOne({ _id: id });
+  if (!staff) return next(new ErrorResponse(404, "no staff found"));
+
+  //update logic
+  if (req.file) staff.avatar = req.file.filename;
+  for (let property in updateParams) {
+    staff[property] = updateParams[property];
+  }
+  const updatedStaff = await staff.save();
+  res.json(new SuccessResponse(200, { updatedStaff }));
+});

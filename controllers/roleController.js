@@ -27,3 +27,10 @@ exports.toggleActiveRole = asyncMiddleware(async (req, res, next) => {
   await Role.updateOne({ _id: role.id }, { isActive: !role.isActive });
   res.json(new SuccessResponse(200, "successfully change active state"));
 });
+
+exports.getRoleById = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const role = await Role.findById(id);
+  if (!role) return next(new ErrorResponse(404, "no role found"));
+  res.json(new SuccessResponse(200, { role }));
+});

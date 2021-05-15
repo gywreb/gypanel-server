@@ -24,17 +24,27 @@ exports.getCurrentUser = asyncMiddleware(async (req, res, next) => {
 });
 
 exports.getUserList = asyncMiddleware(async (req, res, next) => {
-  const users = await User.find();
+  const { user } = req;
+  const users = await User.find({ _id: !user._id });
   if (!users) return next(new ErrorResponse(404, "no user found"));
   res.json(new SuccessResponse(200, { users }));
 });
 
 exports.toggleActiveUser = asyncMiddleware(async (req, res, next) => {
   const { id } = req.params;
+  if (req.user._id === id)
+    return next(new (400, "can't toggle your own account")());
   const user = await User.findById(id);
   if (!user) return next(new ErrorResponse(404, "no user found"));
   await User.updateOne({ _id: user._id }, { isActive: !user.isActive });
   res.json(new SuccessResponse(200, "successfully change active state"));
+});
+
+exports.getUserById = asyncMiddleware(async (req, res, next) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) return next(new ErrorResponse(404, "no user found"));
+  res.json(new SuccessResponse(200, { user }));
 });
 
 exports.updateUserById = asyncMiddleware(async (req, res, next) => {
