@@ -6,10 +6,12 @@ const InvoiceSchema = new Schema(
     fromStaff: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: [true, "userId is required"],
     },
     clientInfo: {
       type: Schema.Types.ObjectId,
       ref: "Customer",
+      required: [true, "customerId is required"],
     },
     productList: [
       {
@@ -46,5 +48,9 @@ const InvoiceSchema = new Schema(
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }
 );
+
+InvoiceSchema.path("productList").validate(function (productList) {
+  if (!productList.length || productList) return false;
+}, "Invoice needs to have at least one product");
 
 module.exports = mongoose.model("Invoice", InvoiceSchema, "invoices");

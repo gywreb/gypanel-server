@@ -57,7 +57,8 @@ exports.updateUserById = asyncMiddleware(async (req, res, next) => {
   if (req.file) user.avatar = req.file.filename;
   if (updateParams.role) {
     const existedRole = await Role.findById(updateParams.role);
-    if (!existedRole) return next(new ErrorResponse(404, "role not found"));
+    if (!existedRole || !existedRole.isActive)
+      return next(new ErrorResponse(404, "role not found"));
     else {
       user.role = updateParams.role;
       updateParams = _.omit(updateParams, "role");

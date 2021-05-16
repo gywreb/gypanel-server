@@ -13,4 +13,11 @@ router
   .route("/:id")
   .get(jwtAuth, accessControl, customerController.getCustomerById);
 
+router.delete(
+  "/deleteAll",
+  jwtAuth,
+  accessControl,
+  customerController.deleteAll
+);
+
 module.exports = router;

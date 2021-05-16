@@ -41,12 +41,6 @@ const UserSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    invoices: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Invoice",
-      },
-    ],
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }
 );

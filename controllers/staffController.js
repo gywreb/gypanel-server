@@ -35,6 +35,11 @@ exports.createStaff = asyncMiddleware(async (req, res, next) => {
   res.json(new SuccessResponse(201, { newStaff }));
 });
 
+exports.deleteAll = asyncMiddleware(async (req, res, next) => {
+  await Staff.deleteMany();
+  res.json(new SuccessResponse(200, "deleted all staffs"));
+});
+
 exports.getStaffById = asyncMiddleware(async (req, res, next) => {
   const { id } = req.params;
   const staff = await Staff.findById(id);

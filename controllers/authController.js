@@ -10,7 +10,8 @@ exports.register = asyncMiddleware(async (req, res, next) => {
   const { fullname, email, password, role } = req.body;
 
   const existedRole = await Role.findById(role);
-  if (!existedRole) return next(new ErrorResponse(404, "role is not found"));
+  if (!existedRole || !existedRole.isActive)
+    return next(new ErrorResponse(404, "role is not found"));
 
   const user = new User({
     fullname,

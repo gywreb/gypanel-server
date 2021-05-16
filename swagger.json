@@ -20,16 +20,20 @@
   },
   "tags": [
     {
+      "name": "File",
+      "description": "Operations about file"
+    },
+    {
+      "name": "Analytic",
+      "description": "Analytic of models"
+    },
+    {
       "name": "Auth",
       "description": "User authentication"
     },
     {
       "name": "User",
       "description": "Operations about user"
-    },
-    {
-      "name": "File",
-      "description": "Operations about file"
     },
     {
       "name": "Role",
@@ -44,6 +48,10 @@
       "description": "Operations about category"
     },
     {
+      "name": "Staff",
+      "description": "Operations about staff"
+    },
+    {
       "name": "Customer",
       "description": "Operations about customer"
     },
@@ -53,6 +61,27 @@
     }
   ],
   "paths": {
+    "/analytic/total": {
+      "get": {
+        "tags": ["Analytic"],
+        "summary": "get total numbers of staff, product, invoice, user",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": ["Auth"],
@@ -158,6 +187,36 @@
       }
     },
     "/user/{userId}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "get user by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "user ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
       "patch": {
         "tags": ["User"],
         "summary": "toggle active state of user",
@@ -317,6 +376,36 @@
       }
     },
     "/role/{roleId}": {
+      "get": {
+        "tags": ["Role"],
+        "summary": "get role by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "description": "role ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
       "patch": {
         "tags": ["Role"],
         "summary": "toggle active state of role",
@@ -393,6 +482,36 @@
       }
     },
     "/product/{productId}": {
+      "get": {
+        "tags": ["Product"],
+        "summary": "get product by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "product ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
       "patch": {
         "tags": ["Product"],
         "summary": "toggle active state of product",
@@ -408,6 +527,48 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/product/updateOne/{productId}": {
+      "patch": {
+        "tags": ["Product"],
+        "summary": "update product by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "product ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "$ref": "#/components/responses/OK"
@@ -469,6 +630,36 @@
       }
     },
     "/category/{categoryId}": {
+      "get": {
+        "tags": ["Category"],
+        "summary": "get category by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "category ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
       "patch": {
         "tags": ["Category"],
         "summary": "toggle active state of category",
@@ -478,6 +669,380 @@
             "name": "categoryId",
             "in": "path",
             "description": "category ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/category/updateOne/{categoryId}": {
+      "patch": {
+        "tags": ["Category"],
+        "summary": "update category by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "category ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Category"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/staff": {
+      "get": {
+        "tags": ["Staff"],
+        "summary": "get staff list",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Staff"],
+        "summary": "create new staff",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Staff"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/staff/{staffId}": {
+      "get": {
+        "tags": ["Staff"],
+        "summary": "get staff by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "staffId",
+            "in": "path",
+            "description": "staff ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Staff"],
+        "summary": "toggle active state of staff",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "staffId",
+            "in": "path",
+            "description": "staff ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/staff/updateOne/{staffId}": {
+      "patch": {
+        "tags": ["Staff"],
+        "summary": "update staff by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "staffId",
+            "in": "path",
+            "description": "staff ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Staff"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/customer": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "get customer list",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Customer"],
+        "summary": "create new customer",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Customer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/customer/{customerId}": {
+      "get": {
+        "tags": ["Customer"],
+        "summary": "get customer by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "description": "customer ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice": {
+      "get": {
+        "tags": ["Invoice"],
+        "summary": "get invoice list",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Invoice"],
+        "summary": "create new invoice (NOT USE FOR UI-CLIENT, MOCK UP DATA ONLY)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Staff"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/invoice/{invoiceId}": {
+      "get": {
+        "tags": ["Invoice"],
+        "summary": "get invoice by id",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "description": "invoice ObjectId from mongodb",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/invoice/confirm/{invoiceId}": {
+      "patch": {
+        "tags": ["Invoice"],
+        "summary": "confirm invoice",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "invoiceId",
+            "in": "path",
+            "description": "invoice ObjectId from mongodb",
             "required": true,
             "schema": {
               "type": "string"
@@ -747,23 +1312,19 @@
             "type": "number",
             "default": 0
           },
-          "isActive": {
+          "isConfirm": {
             "type": "boolean",
-            "default": true
+            "default": false
           }
         }
       },
       "Customer": {
         "type": "object",
-        "required": ["firstname", "lastname", "gender", "contactEmail"],
+        "required": ["fullname", "gender", "contactEmail"],
         "properties": {
-          "firstname": {
+          "fullname": {
             "type": "string",
-            "example": "dragingod-sama"
-          },
-          "lastname": {
-            "type": "string",
-            "example": "dragingod-sama"
+            "example": "dragongod-sama"
           },
           "gender": {
             "type": "string",
@@ -779,6 +1340,52 @@
             "type": "string",
             "uniqueItems": true,
             "example": "someone@gmail.com"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "Staff": {
+        "type": "object",
+        "required": ["firstname", "lastname", "gender", "contactEmail"],
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "example": "dragongod-sama"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "dragingod-sama"
+          },
+          "gender": {
+            "type": "string",
+            "enum": ["male", "female"]
+          },
+          "phone": {
+            "type": "string"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          },
+          "address": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "contactEmail": {
+            "type": "string",
+            "uniqueItems": true,
+            "example": "someone@gmail.com"
+          },
+          "invoices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Invoice"
+            }
           },
           "isActive": {
             "type": "boolean",

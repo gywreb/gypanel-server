@@ -28,7 +28,10 @@ exports.createProduct = asyncMiddleware(async (req, res, next) => {
   let newProduct;
   if (categories.length) {
     const existedCategories = await Category.find({ _id: categories });
-    if (!existedCategories.length)
+    const isInActiveExisted = existedCategories.find(
+      (category) => !category.isActive
+    );
+    if (!existedCategories.length || isInActiveExisted)
       return next(new ErrorResponse(404, "no such categories existed"));
 
     product.categories = [...categories];
@@ -78,23 +81,21 @@ exports.updateProductById = asyncMiddleware(async (req, res, next) => {
   // update logic
   if (req.file) product.featuredImg = req.file.filename;
   if (updateParams.categories) {
-    const categories = await Category.find();
-    let notExisted = false;
-    for (let category of updateParams.categories) {
-      if (!categories.includes(category)) {
-        notExisted = true;
-        break;
-      }
-    }
-    if (notExisted) return next(new ErrorResponse(404, "no category found"));
-    else {
-      product.categories = [...updateParams.categories];
-      await Category.updateMany(
-        { _id: updateParams.categories },
-        { $pull: { products: product._id } }
-      );
-      updateParams = _.omit(updateParams, "categories");
-    }
+    const existedCategories = await Category.find({
+      _id: updateParams.categories,
+    });
+    const isInActiveExisted = existedCategories.find(
+      (category) => !category.isActive
+    );
+    if (!existedCategories.length || isInActiveExisted)
+      return next(new ErrorResponse(404, "no such categories existed"));
+
+    product.categories = [...updateParams.categories];
+    await Category.updateMany(
+      { _id: updateParams.categories },
+      { $pull: { products: product._id } }
+    );
+    updateParams = _.omit(updateParams, "categories");
   }
 
   for (let property in updateParams) {

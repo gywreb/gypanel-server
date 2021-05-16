@@ -29,4 +29,6 @@ router
     staffController.createStaff
   );
 
+router.delete("/deleteAll", jwtAuth, accessControl, staffController.deleteAll);
+
 module.exports = router;
