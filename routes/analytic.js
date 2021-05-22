@@ -4,11 +4,6 @@ const analyticController = require("../controllers/analyticController");
 const accessControl = require("../middleware/accessControl");
 const jwtAuth = require("../middleware/jwtAuth");
 
-router.get(
-  "/total",
-  jwtAuth,
-  accessControl,
-  analyticController.getTotalAnalytic
-);
+router.get("/total", jwtAuth, analyticController.getTotalAnalytic);
 
 module.exports = router;
