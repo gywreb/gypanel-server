@@ -1277,7 +1277,7 @@
       },
       "Invoice": {
         "type": "object",
-        "required": ["total"],
+        "required": ["fromStaff", "clientInfo", "productList"],
         "properties": {
           "fromStaff": {
             "type": "string",

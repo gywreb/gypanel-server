@@ -50,7 +50,7 @@ const InvoiceSchema = new Schema(
 );
 
 InvoiceSchema.path("productList").validate(function (productList) {
-  if (!productList.length || productList) return false;
+  if (!productList.length || !productList) return false;
 }, "Invoice needs to have at least one product");
 
 module.exports = mongoose.model("Invoice", InvoiceSchema, "invoices");

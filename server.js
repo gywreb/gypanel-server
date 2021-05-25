@@ -17,12 +17,14 @@ const customer = require("./routes/customer");
 const invoice = require("./routes/invoice");
 const staff = require("./routes/staff");
 const analytic = require("./routes/analytic");
+const path = require("path");
 
 ConnectMongoDB.getConnection();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.static(path.join(__dirname, "/views")));
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
