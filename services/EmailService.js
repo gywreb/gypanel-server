@@ -16,14 +16,6 @@ exports.EmailService = class EmailService {
   }
 
   static async sendInvoiceEmail(email, subject, message, invoice, next) {
-    const productPaymentView = await Promise.all(
-      invoice.productList.map(async (product) => {
-        const productFromDB = await Product.findById(product.id);
-        const productTotal = product.quantity * productFromDB.price;
-        return { name: productFromDB.name, price: productTotal };
-      })
-    );
-    console.log(productPaymentView);
     try {
       this.transporter.use(
         "compile",
@@ -43,7 +35,10 @@ exports.EmailService = class EmailService {
         text: message,
         template: "index",
         context: {
-          items: productPaymentView,
+          items: invoice.productList.map((product) => {
+            const { name, quantity, price } = product;
+            return { name, quantity, price };
+          }),
           total: invoice.total,
         },
       });

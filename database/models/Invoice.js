@@ -19,9 +19,17 @@ const InvoiceSchema = new Schema(
           type: Schema.Types.ObjectId,
           ref: "Product",
         },
+        name: {
+          type: String,
+          required: [true, "product name is required"],
+        },
         quantity: {
           type: Number,
           default: 1,
+        },
+        price: {
+          type: Number,
+          required: [true, "product price is required"],
         },
       },
     ],

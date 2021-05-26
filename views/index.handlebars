@@ -27,6 +27,8 @@
       **/ .rtl { direction: rtl; font-family: Tahoma, "Helvetica Neue",
       "Helvetica", Helvetica, Arial, sans-serif; } .rtl table { text-align:
       right; } .rtl table tr td:nth-child(2) { text-align: left; }
+      .invoice-total {font-weight: bold; color: #275890; } table { table-layout:
+      fixed; }
     </style>
   </head>
   <body>
@@ -48,7 +50,6 @@
               </table>
             </td>
           </tr>
-
           <tr class="information">
             <td colspan="2">
               <table>
@@ -62,9 +63,11 @@
             <td>
               Item
             </td>
-
             <td>
-              Price
+              Quantity
+            </td>
+            <td>
+              Total Price
             </td>
           </tr>
 
@@ -74,6 +77,9 @@
                 {{name}}
               </td>
               <td>
+                x{{quantity}}
+              </td>
+              <td>
                 ${{price}}
               </td>
             </tr>
@@ -81,10 +87,11 @@
 
           <tr class="total">
             <td></td>
-
-            <td>
-              Total: $
-              {{total}}
+            <td></td>
+            <td class="invoice-total">
+              <h3>
+                Total: ${{total}}
+              </h3>
             </td>
           </tr>
         </table>

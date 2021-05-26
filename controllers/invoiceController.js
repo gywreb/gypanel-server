@@ -41,12 +41,25 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
     return (await acc) + product.quantity * productFromDB.price;
   }, Promise.resolve(0));
 
+  const responseProductList = await Promise.all(
+    productList.map(async (product) => {
+      const productFromDB = await Product.findById(product.id);
+      const price = productFromDB.price * product.quantity;
+      return {
+        id: product.id,
+        name: productFromDB.name,
+        price,
+        quantity: product.quantity,
+      };
+    })
+  );
+
   console.log(total);
 
   const invoice = new Invoice({
     fromStaff,
     clientInfo,
-    productList,
+    productList: responseProductList,
     paymentDate,
     total,
     tax,
