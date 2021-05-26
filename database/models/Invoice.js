@@ -53,6 +53,10 @@ const InvoiceSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    confirmDate: {
+      type: Date,
+      default: null,
+    },
   },
   { id: false, toJSON: { virtuals: true }, timestamps: true }
 );

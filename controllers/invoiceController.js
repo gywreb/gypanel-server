@@ -6,6 +6,7 @@ const Staff = require("../database/models/Staff");
 const Customer = require("../database/models/Customer");
 const Product = require("../database/models/Product");
 const { EmailService } = require("../services/EmailService");
+const moment = require("moment");
 
 exports.getInvoiceList = asyncMiddleware(async (req, res, next) => {
   const invoices = await Invoice.find()
@@ -79,11 +80,15 @@ exports.getInvoiceById = asyncMiddleware(async (req, res, next) => {
 
 exports.confirmInvoice = asyncMiddleware(async (req, res, next) => {
   const { id } = req.params;
+  const { confirmDate } = req.body;
   const invoice = await Invoice.findById(id);
   if (!invoice) return next(new ErrorResponse(404, "no invoice found"));
-  await Invoice.updateOne({ _id: invoice.id }, { isConfirm: true });
+  await Invoice.updateOne(
+    { _id: id },
+    { isConfirm: true, confirmDate: confirmDate || moment().format() }
+  );
   await Staff.updateOne(
-    { _id: invoice.fromStaff },
+    { _id: invoice.fromStaff, invoices: { $ne: invoice._id } },
     { $push: { invoices: invoice._id } }
   );
   const customer = await Customer.findById(invoice.clientInfo);
