@@ -85,7 +85,11 @@ exports.confirmInvoice = asyncMiddleware(async (req, res, next) => {
   if (!invoice) return next(new ErrorResponse(404, "no invoice found"));
   await Invoice.updateOne(
     { _id: id },
-    { isConfirm: true, confirmDate: confirmDate || moment().format() }
+    {
+      isConfirm: true,
+      confirmDate: confirmDate || moment().format(),
+      fromStaff: invoice.fromStaff,
+    }
   );
   await Staff.updateOne(
     { _id: invoice.fromStaff, invoices: { $ne: invoice._id } },
