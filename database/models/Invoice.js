@@ -5,8 +5,8 @@ const InvoiceSchema = new Schema(
   {
     fromStaff: {
       type: Schema.Types.ObjectId,
-      ref: "User",
-      required: [true, "userId is required"],
+      ref: "Staff",
+      required: [true, "staff is required"],
     },
     clientInfo: {
       type: Schema.Types.ObjectId,
