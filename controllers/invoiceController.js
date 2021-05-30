@@ -9,9 +9,7 @@ const { EmailService } = require("../services/EmailService");
 const moment = require("moment");
 
 exports.getInvoiceList = asyncMiddleware(async (req, res, next) => {
-  const invoices = await Invoice.find()
-    .populate("fromStaff")
-    .populate("clientInfo");
+  const invoices = await Invoice.find().populate("fromStaff clientInfo");
   if (!invoices) return next(new ErrorResponse(404, "no invoice found"));
   res.json(new SuccessResponse(200, { invoices }));
 });
@@ -88,7 +86,6 @@ exports.confirmInvoice = asyncMiddleware(async (req, res, next) => {
     {
       isConfirm: true,
       confirmDate: confirmDate || moment().format(),
-      fromStaff: invoice.fromStaff,
     }
   );
   await Staff.updateOne(
