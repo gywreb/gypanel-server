@@ -6,5 +6,6 @@ const jwtAuth = require("../middleware/jwtAuth");
 router.get("/total", jwtAuth, analyticController.getTotalAnalytic);
 router.get("/revenue/:year", jwtAuth, analyticController.getMonthRevenueByYear);
 router.get("/rankStaff", jwtAuth, analyticController.rankStaff);
+router.get("/rankProduct", jwtAuth, analyticController.rankProduct);
 
 module.exports = router;

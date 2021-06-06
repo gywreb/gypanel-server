@@ -36,6 +36,32 @@ exports.getTotalAnalytic = asyncMiddleware(async (req, res, next) => {
   );
 });
 
+exports.rankProduct = asyncMiddleware(async (req, res, next) => {
+  const invoices = await Invoice.find();
+  let filteredProductList = [];
+  invoices.map(({ productList }) => {
+    filteredProductList.push(...productList);
+  });
+  console.log(filteredProductList);
+  const rankedProduct = filteredProductList.reduce((acc, product) => {
+    if (product.name) {
+      if (!(product.name in acc)) {
+        acc[product.name] = 0 + product.price;
+      } else acc[product.name] += product.price;
+      return acc;
+    } else return acc;
+  }, {});
+
+  let formatedRankedProduct = [];
+  for (let key in rankedProduct) {
+    formatedRankedProduct.push({ name: key, value: rankedProduct[key] });
+  }
+  const resRankedProduct = formatedRankedProduct.sort((a, b) =>
+    b.value > a.value ? 1 : -1
+  );
+  res.json(new SuccessResponse(200, { resRankedProduct }));
+});
+
 exports.rankStaff = asyncMiddleware(async (req, res, next) => {
   const staffs = await Staff.find({ isActive: true });
   const staffWithRevenue = await Promise.all(
