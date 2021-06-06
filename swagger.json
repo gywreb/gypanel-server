@@ -135,6 +135,27 @@
         }
       }
     },
+    "/analytic/rankProduct": {
+      "get": {
+        "tags": ["Analytic"],
+        "summary": "rank product by invoice revenue",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OK"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": ["Auth"],
