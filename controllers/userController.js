@@ -25,9 +25,10 @@ exports.getCurrentUser = asyncMiddleware(async (req, res, next) => {
 
 exports.getUserList = asyncMiddleware(async (req, res, next) => {
   const { user } = req;
-  const users = await User.find({ _id: !user._id });
+  const users = await User.find();
   if (!users) return next(new ErrorResponse(404, "no user found"));
-  res.json(new SuccessResponse(200, { users }));
+  const respUsers = users.filter((dbuser) => dbuser._id !== user._id);
+  res.json(new SuccessResponse(200, { users: respUsers }));
 });
 
 exports.toggleActiveUser = asyncMiddleware(async (req, res, next) => {
