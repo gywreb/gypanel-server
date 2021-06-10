@@ -27,7 +27,7 @@ exports.getUserList = asyncMiddleware(async (req, res, next) => {
   const { user } = req;
   const users = await User.find();
   if (!users) return next(new ErrorResponse(404, "no user found"));
-  const respUsers = users.filter((dbuser) => dbuser._id !== user._id);
+  const respUsers = users.filter((dbuser) => dbuser._id !== user._doc._id);
   res.json(new SuccessResponse(200, { users: respUsers }));
 });
 
