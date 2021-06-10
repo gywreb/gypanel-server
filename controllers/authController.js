@@ -32,6 +32,8 @@ exports.login = asyncMiddleware(async (req, res, next) => {
   const user = await User.findOne({ email });
   if (!user)
     return next(new ErrorResponse(404, `no user with email: ${email} found`));
+  if (!user.isActive)
+    return next(new ErrorResponse(400, "this user is no longer active !"));
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) return next(new ErrorResponse(400, "password is incorrect"));
   const payload = _.omit(user._doc, "password", "_id", "__v");
