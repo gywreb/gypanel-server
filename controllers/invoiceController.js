@@ -7,6 +7,7 @@ const Customer = require("../database/models/Customer");
 const Product = require("../database/models/Product");
 const { EmailService } = require("../services/EmailService");
 const moment = require("moment");
+const { NotificationService } = require("../services/NotificationService");
 
 exports.getInvoiceList = asyncMiddleware(async (req, res, next) => {
   const invoices = await Invoice.find().populate("fromStaff clientInfo");
@@ -66,6 +67,10 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
   });
 
   const newInvoice = await invoice.save();
+  NotificationService.init();
+  await NotificationService.sendNotification(
+    "New invoice is arrived! Please confrim"
+  );
   res.json(new SuccessResponse(201, { newInvoice }));
 });
 
