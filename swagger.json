@@ -1372,11 +1372,11 @@
         "properties": {
           "fromStaff": {
             "type": "string",
-            "$ref": "#/components/schemas/User"
+            "default": "place staff id here"
           },
           "clientInfo": {
             "type": "string",
-            "$ref": "#/components/schemas/Customer"
+            "default": "place customer id here"
           },
           "productList": {
             "type": "array",
