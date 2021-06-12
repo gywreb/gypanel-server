@@ -1055,9 +1055,9 @@
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Staff"
+                "$ref": "#/components/schemas/Invoice"
               }
             }
           }
