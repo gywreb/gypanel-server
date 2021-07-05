@@ -17,7 +17,7 @@ const ProductSchema = new Schema(
     ],
     featuredImg: {
       type: String,
-      required: [true, "featured image is required"],
+      // required: [true, "featured image is required"],
     },
     images: [{ type: String }],
     price: {

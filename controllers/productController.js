@@ -4,6 +4,7 @@ const { SuccessResponse } = require("../models/SuccessResponse");
 const { ErrorResponse } = require("../models/ErrorResponse");
 const Category = require("../database/models/Category");
 const _ = require("lodash");
+const Invoice = require("../database/models/Invoice");
 
 exports.getProductList = asyncMiddleware(async (req, res, next) => {
   const products = await Product.find().populate("categories");
@@ -20,7 +21,7 @@ exports.createProduct = asyncMiddleware(async (req, res, next) => {
     categories: null,
     price: priceNumber,
     images: images ? images : [],
-    featuredImg: req.file ? req.file.filename : "",
+    featuredImg: req.file ? req.file.filename : null,
     quantity,
   });
 

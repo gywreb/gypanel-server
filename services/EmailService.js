@@ -1,7 +1,5 @@
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
-const path = require("path");
-const Product = require("../database/models/Product");
 
 exports.EmailService = class EmailService {
   static init() {

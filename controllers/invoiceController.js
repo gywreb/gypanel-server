@@ -54,8 +54,6 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
     })
   );
 
-  console.log(total);
-
   const invoice = new Invoice({
     fromStaff,
     clientInfo,
