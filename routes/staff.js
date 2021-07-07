@@ -26,7 +26,7 @@ router
     jwtAuth,
     accessControl,
     uploadImg.single("avatar"),
-    staffController.createStaff
+    staffController.updateStaffById
   );
 
 router.delete("/deleteAll", jwtAuth, accessControl, staffController.deleteAll);
