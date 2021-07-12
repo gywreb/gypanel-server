@@ -67,7 +67,7 @@ exports.createInvoice = asyncMiddleware(async (req, res, next) => {
   const newInvoice = await invoice.save();
   NotificationService.init();
   await NotificationService.sendNotification(
-    "New invoice is arrived! Please confrim"
+    "New invoice is arrived! Please confirm"
   );
   res.json(new SuccessResponse(201, { newInvoice }));
 });
