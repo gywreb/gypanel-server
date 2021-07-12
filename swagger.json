@@ -1058,6 +1058,20 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Invoice"
+              },
+              "examples": {
+                "test-invoice": {
+                  "value": {
+                    "fromStaff": "60af95498c838e77326b62bd",
+                    "clientInfo": "60b38f298c838e77326b62c4",
+                    "productList": [
+                      {
+                        "id": "60d4726cd1e784366d9c23fb",
+                        "quantity": 5
+                      }
+                    ]
+                  }
+                }
               }
             }
           }
