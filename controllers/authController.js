@@ -41,7 +41,11 @@ exports.login = asyncMiddleware(async (req, res, next) => {
 
   const role = await Role.findById(user.role);
   if (!role) return next(new ErrorResponse(404, "role of this user not found"));
-  if (!role.isActive)
+  if (
+    !role.isActive &&
+    !role.permissions.includes("all") &&
+    !role.methods.includes("ALL")
+  )
     return next(
       new ErrorResponse(
         400,
