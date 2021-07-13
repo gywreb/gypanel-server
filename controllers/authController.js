@@ -40,7 +40,14 @@ exports.login = asyncMiddleware(async (req, res, next) => {
   const token = User.generateJwt(payload);
 
   const role = await Role.findById(user.role);
-  if (!role) return next(new ErrorResponse(404, "role not found"));
+  if (!role) return next(new ErrorResponse(404, "role of this user not found"));
+  if (!role.isActive)
+    return next(
+      new ErrorResponse(
+        404,
+        "your position(role) is longer active, Please contact your Admin"
+      )
+    );
 
   res.json(
     new SuccessResponse(200, {
