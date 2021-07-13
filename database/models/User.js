@@ -25,6 +25,9 @@ const UserSchema = new Schema(
     },
     phone: Number,
     avatar: String,
+    company: String,
+    address: String,
+    birthday: String,
     gender: {
       type: String,
       enum: ["male", "female"],
