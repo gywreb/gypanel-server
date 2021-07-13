@@ -25,7 +25,9 @@ exports.getCurrentUser = asyncMiddleware(async (req, res, next) => {
 
 exports.getUserList = asyncMiddleware(async (req, res, next) => {
   const { user } = req;
-  const users = await User.find({ _id: { $ne: user._doc._id } });
+  const users = await User.find({ _id: { $ne: user._doc._id } }).select(
+    "-password"
+  );
   if (!users) return next(new ErrorResponse(404, "no user found"));
   res.json(new SuccessResponse(200, { users }));
 });
