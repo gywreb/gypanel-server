@@ -1273,26 +1273,11 @@
             "type": "string",
             "format": "binary"
           },
-          "address": {
-            "type": "string"
-          },
-          "birthday": {
-            "type": "string"
-          },
           "phone": {
-            "type": "string"
-          },
-          "company": {
-            "type": "string"
+            "type": "number"
           },
           "role": {
             "type": "string"
-          },
-          "invoices": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Invoice"
-            }
           },
           "isActive": {
             "type": "boolean",

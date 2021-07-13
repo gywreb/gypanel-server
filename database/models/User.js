@@ -23,11 +23,8 @@ const UserSchema = new Schema(
       minlength: [8, "password must be at least 8 characters"],
       trim: true,
     },
-    phone: String,
-    company: String,
+    phone: Number,
     avatar: String,
-    address: String,
-    birthday: String,
     gender: {
       type: String,
       enum: ["male", "female"],
