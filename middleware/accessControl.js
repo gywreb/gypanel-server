@@ -6,6 +6,7 @@ const accessControl = asyncMiddleware(async (req, res, next) => {
   const { user } = req;
   if (!user) return next(new ErrorResponse(401, "unauthorized"));
   const role = await Role.findById(user.role);
+  role.permissions = [...role.permissions.map((role) => role.toLowerCase())];
   //   console.log(role);
   //   console.log(req.originalUrl.split("/")[3]);
   if (role.permissions.includes("all") && role.methods.includes("ALL"))

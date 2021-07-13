@@ -44,7 +44,7 @@ exports.login = asyncMiddleware(async (req, res, next) => {
   if (!role.isActive)
     return next(
       new ErrorResponse(
-        404,
+        400,
         "your position(role) is longer active, Please contact your Admin"
       )
     );
