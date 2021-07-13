@@ -74,6 +74,7 @@ exports.updateUserById = asyncMiddleware(async (req, res, next) => {
       );
     }
   }
+  if (updateParams.password) updateParams = _.omit(updateParams, "password");
   for (let property in updateParams) {
     user[property] = updateParams[property];
   }
