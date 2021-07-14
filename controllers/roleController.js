@@ -15,7 +15,7 @@ exports.createRole = asyncMiddleware(async (req, res, next) => {
 
   if (permissions.includes("product")) {
     if (!(permissions.includes("category") && methods.includes("GET")))
-      return res.json(
+      return next(
         new ErrorResponse(
           400,
           "Warning: GET method & category permission must need for product related permission!"
@@ -24,7 +24,7 @@ exports.createRole = asyncMiddleware(async (req, res, next) => {
   }
   if (permissions.includes("user")) {
     if (!(permissions.includes("role") && methods.includes("GET")))
-      return res.json(
+      return next(
         new ErrorResponse(
           400,
           "Warning: GET method & role permission must need for user related permission!"
