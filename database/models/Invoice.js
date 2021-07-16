@@ -26,10 +26,12 @@ const InvoiceSchema = new Schema(
         quantity: {
           type: Number,
           default: 1,
+          min: [1, "quantity must be at least 1"],
         },
         price: {
           type: Number,
           required: [true, "product price is required"],
+          min: [100, "quantity must be at least 100"],
         },
       },
     ],

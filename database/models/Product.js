@@ -23,10 +23,12 @@ const ProductSchema = new Schema(
     price: {
       type: Number,
       required: [true, "price is required"],
+      min: [100, "price must at least 100"],
     },
     instock: {
       type: Number,
       default: 1,
+      min: [1, "instock must at least 1"],
     },
     isActive: {
       type: Boolean,
